@@ -1,0 +1,14 @@
+server:
+  port: 9000
+zuul:
+  routes:
+    api-2:
+      path: /app/**
+      url: http://localhost:9000
+
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: net.sf.log4jdbc.DriverSpy
