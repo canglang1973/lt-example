@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="connectionFactoryProductor" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <property name="targetConnectionFactory">
+            <bean class="org.fusesource.stomp.jms.StompJmsConnectionFactory">
+                <property name="brokerURI" value="tcp://localhost:61613" />
+                <property name="username" value="admin" />
+                <property name="password" value="admin" />
+            </bean>
+        </property>
+        <!-- Session缓存数量 -->
+        <property name="sessionCacheSize" value="5" />
+    </bean>
+    <bean id="connectionFactoryConsumer"
+          class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="sessionCacheSize" value="5" />
+        <property name="targetConnectionFactory">
+            <bean class="org.fusesource.stomp.jms.StompJmsConnectionFactory">
+                <property name="brokerURI" value="tcp://localhost:61613" />
+                <property name="username" value="admin" />
+                <property name="password" value="admin" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="stompQueue" class="org.fusesource.stomp.jms.StompJmsQueue">
+        <constructor-arg name="name" value="com.canglang.queue" />
+        <constructor-arg name="type" value="queue" />
+    </bean>
+    <bean id="stompTopic" class="org.fusesource.stomp.jms.StompJmsTopic">
+        <constructor-arg name="name" value="com.canglang.topic"/>
+        <constructor-arg name="type" value="topic" />
+    </bean>
+</beans>

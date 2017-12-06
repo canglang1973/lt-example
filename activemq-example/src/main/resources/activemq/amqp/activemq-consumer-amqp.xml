@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+default-autowire="byName">
+
+    <import resource="activemq-destination-amqp.xml"/>
+
+    <bean id="methodInvokeMqListener" class="com.canglang.activemq.jms.JmsInvokerServiceExporter">
+        <property name="serviceInterface" value="com.canglang.activemq.MethodInvokeMq" />
+        <property name="service" ref="methodInvokeMq" />
+    </bean>
+    <!--队列消费者配置-->
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactoryConsumer" />
+        <property name="destination" ref="amqpQueue" />
+        <!--消费者至少有一个-->
+        <property name="concurrentConsumers" value="2" />
+        <property name="messageListener" ref="methodInvokeMqListener" />
+    </bean>
+    <!--发布/订阅消费者配置-->
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactoryConsumer" />
+        <property name="destination" ref="amqpTopic" />
+        <property name="concurrentConsumers" value="1" />
+        <!--若持久化订阅subscriptionDurable为TRUE,订阅者concurrentConsumers就只能是1个并需在connectionFactory设置一个唯一clientID-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="messageListener" ref="methodInvokeMqListener" />
+    </bean>
+</beans>
