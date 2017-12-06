@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="activemq-destination-stomp.xml"/>
+    <bean id="methodInvokeMqProcessor" class="com.canglang.activemq.jms.JmsInvokerProxyFactoryBean">
+        <property name="serviceInterface" value="com.canglang.activemq.MethodInvokeMq" />
+        <property name="connectionFactory" ref="connectionFactoryProductor" />
+        <property name="destination" ref="stompQueue"/>
+    </bean>
+    <bean id="methodInvokeMqProcessor_topic" class="com.canglang.activemq.jms.JmsInvokerProxyFactoryBean">
+        <property name="serviceInterface" value="com.canglang.activemq.MethodInvokeMq" />
+        <property name="connectionFactory" ref="connectionFactoryProductor" />
+        <property name="destination" ref="stompTopic"/>
+    </bean>
+</beans>

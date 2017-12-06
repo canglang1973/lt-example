@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="connectionFactoryProductor" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.qpid.jms.JmsConnectionFactory">
+                <property name="remoteURI" value="failover:(amqp://localhost:5672)" />
+                <property name="username" value="admin" />
+                <property name="password" value="admin" />
+            </bean>
+        </property>
+        <!-- Session缓存数量 -->
+        <property name="sessionCacheSize" value="5" />
+    </bean>
+    <bean id="connectionFactoryConsumer"
+          class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="sessionCacheSize" value="5" />
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.qpid.jms.JmsConnectionFactory">
+                <property name="remoteURI" value="failover:(amqp://localhost:5672)" />
+                <property name="username" value="admin" />
+                <property name="password" value="admin" />
+                <property name="clientID" value="amqp"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="amqpQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="com.canglang.queue"/>
+    </bean>
+    <bean id="amqpTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="com.canglang.topic"/>
+    </bean>
+</beans>

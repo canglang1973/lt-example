@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="connectionFactoryProductor" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="failover:(tcp://localhost:61616)" />
+                <property name="useAsyncSend" value="true" />
+            </bean>
+        </property>
+        <!-- Session缓存数量 -->
+        <property name="sessionCacheSize" value="5" />
+    </bean>
+    <bean id="connectionFactoryConsumer"
+          class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="sessionCacheSize" value="5" />
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="failover:(tcp://localhost:61616)" />
+                <property name="useAsyncSend" value="true" />
+                <property name="clientID" value="leitao" />
+            </bean>
+        </property>
+    </bean>
+    <bean id="comCanglangQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="com.canglang.queue"/>
+    </bean>
+    <bean id="comCanglangTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="com.canglang.topic"/>
+    </bean>
+</beans>
