@@ -47,7 +47,13 @@ public class RateLimiterFilter extends ZuulFilter {
         Rate rate = rateMapping.get(method);
         if (null!=rate){
             RateLimiter rateLimiter = rate.getRateLimiter();
-            rateLimiter.acquire(5);
+//            rateLimiter.acquire(5);
+            boolean flag = rateLimiter.tryAcquire(rate.getAcquirePermits(),rate.getAcquireTimeout(),rate.getAcquireTimeoutTimeUnit());
+            if (!flag){
+                requestContext.setSendZuulResponse(false);
+                requestContext.setResponseStatusCode(110);
+                requestContext.setResponseBody("{\"result\":\"你访问得太频繁了,受不鸟了!\"}");
+            }
             System.out.println("==========="+method+"======="+rateLimiter.getRate());
         }
         return null;

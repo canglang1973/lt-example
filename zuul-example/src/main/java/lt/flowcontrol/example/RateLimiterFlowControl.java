@@ -17,15 +17,21 @@ public class RateLimiterFlowControl {
     public static void main(String[] args){
         ExecutorService executor = Executors.newCachedThreadPool();
 
-        RateLimiter rateLimiter = RateLimiter.create(20);//每秒放入的令牌数
+        RateLimiter rateLimiter = RateLimiter.create(10);//每秒放入的令牌数
 //        RateLimiter rateLimiter = RateLimiter.create(20,10,TimeUnit.SECONDS);//预热
         for(int i=0;i<20;i++){
             int no=i;
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    rateLimiter.acquire(50);
-                    System.out.println("========"+no+"rate:"+rateLimiter.getRate());
+//                    rateLimiter.acquire(5);
+                    boolean b = rateLimiter.tryAcquire(1);
+                    if (!b){
+                        System.out.println("访问频率过高:"+no);
+                    }else {
+                        System.out.println("========"+no+"rate:"+rateLimiter.getRate());
+
+                    }
                 }
             };
             executor.submit(runnable);
