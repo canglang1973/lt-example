@@ -1,7 +1,7 @@
 package lt.ratelimiter.example.client;
 
 /**
- * @author wukaiqiang
+ * @author leitao
  */
 public class RateLimiterConstants {
     public static final String RATE_LIMITER_KEY_PREFIX = "rate_limiter:";

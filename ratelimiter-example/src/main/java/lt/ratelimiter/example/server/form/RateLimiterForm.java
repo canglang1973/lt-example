@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * @author wukaiqiang
+ * @author leitao
  */
 @Data
 @Builder

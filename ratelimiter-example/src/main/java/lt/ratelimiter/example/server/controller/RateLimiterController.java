@@ -20,7 +20,7 @@ import java.util.List;
 
 
 /**
- * @author wukaiqiang
+ * @author leitao
  */
 @RestController
 public class RateLimiterController {

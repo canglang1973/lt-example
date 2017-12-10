@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 
 /**
- * @author wukaiqiang
+ * @author leitao
  */
 public class RateLimiterClient {
 

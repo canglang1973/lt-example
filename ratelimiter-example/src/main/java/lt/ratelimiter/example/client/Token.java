@@ -1,7 +1,7 @@
 package lt.ratelimiter.example.client;
 
 /**
- * @author wukaiqiang
+ * @author leitao
  */
 public enum Token {
     /**
