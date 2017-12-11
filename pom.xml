@@ -11,6 +11,7 @@
     <modules>
         <module>zuul-example</module>
         <module>activemq-example</module>
+        <module>my-ratelimiter</module>
         <module>ratelimiter-example</module>
     </modules>
     <parent>

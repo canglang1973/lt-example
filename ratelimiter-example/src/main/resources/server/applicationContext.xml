@@ -3,15 +3,15 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="cn.caijiajia">
+    <context:component-scan base-package="lt.ratelimiter.example.server">
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 
-    <import resource="classpath:applicationContext-rateLimiter.xml"/>
+    <import resource="classpath:client/applicationContext-rateLimiter.xml"/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
-            <value>classpath:spring-config.properties</value>
+            <value>classpath:server/spring-config.properties</value>
         </property>
     </bean>
 

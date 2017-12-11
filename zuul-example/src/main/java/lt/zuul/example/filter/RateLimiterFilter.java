@@ -7,7 +7,6 @@ import lt.zuul.example.dynamicrate.Rate;
 import lt.zuul.example.dynamicrate.RateMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version: 1.0
  * @description:
  **/
-@Component
+//@Component
 public class RateLimiterFilter extends ZuulFilter {
     @Override
     public String filterType() {

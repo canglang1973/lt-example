@@ -44,4 +44,11 @@ public class RateLimiterController {
     }
 
 
+
+    @RequestMapping(value = "/rate")
+    public void rateTest(String context,String key){
+        rateLimiterService.rateTest("nihao","APP");
+    }
+
+
 }

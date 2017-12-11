@@ -2,9 +2,12 @@ server:
   port: 9000
 zuul:
   routes:
-    api-2:
+    api-1:
       path: /app/**
       url: http://localhost:9000
+    api-2:
+      path: /rate/**
+      url: http://localhost:8080/rate
 
 spring:
   datasource:
