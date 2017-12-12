@@ -5,12 +5,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
-import lt.ratelimiter.example.client.RateLimiterClient;
 import lt.ratelimiter.example.client.RateLimiterConstants;
 import lt.ratelimiter.example.client.Token;
+import lt.ratelimiter.example.client.redis.RateLimiter;
+import lt.ratelimiter.example.client.redis.RateLimiterRedisClient;
+import lt.ratelimiter.example.server.dao.RateDao;
 import lt.ratelimiter.example.server.domain.RateLimiterInfo;
 import lt.ratelimiter.example.server.form.RateLimiterForm;
-import lt.ratelimiter.example.server.dao.RateDao;
 import lt.ratelimiter.example.server.vo.RateLimiterVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,6 +46,8 @@ public class RateLimiterService implements InitializingBean {
     private RedisScript<Long> rateLimiterLua;
 
     private RateDao rateDao = new RateDao();
+
+    private RateLimiterRedisClient client = new RateLimiterRedisClient();
 
 //    @Autowired
 //    private RateLimiterInfoMapper rateLimiterInfoMapper;
@@ -141,9 +144,11 @@ public class RateLimiterService implements InitializingBean {
                     log.info("diff db and redis job start.....");
                     List<RateLimiterInfo> rateLimiterInfoList = rateDao.selectAll();
                     for (RateLimiterInfo rateLimiterInfo : rateLimiterInfoList) {
-                        stringRedisTemplate.execute(rateLimiterLua,
-                                ImmutableList.of(getKey(rateLimiterInfo.getName())),
-                                RateLimiterConstants.RATE_LIMITER_INIT_METHOD, rateLimiterInfo.getMaxPermits().toString(), rateLimiterInfo.getRate().toString(), rateLimiterInfo.getApps());
+                        RateLimiter rateLimiter = client.getRateLimiter();
+                        rateLimiter.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
+//                        stringRedisTemplate.execute(rateLimiterLua,
+//                                ImmutableList.of(getKey(rateLimiterInfo.getName())),
+//                                RateLimiterConstants.RATE_LIMITER_INIT_METHOD, rateLimiterInfo.getMaxPermits().toString(), rateLimiterInfo.getRate().toString(), rateLimiterInfo.getApps());
                     }
                     log.info("diff db and redis job end.....");
                 } catch (Exception e) {
@@ -154,7 +159,8 @@ public class RateLimiterService implements InitializingBean {
     }
 
     public void rateTest(String context,String key){
-        RateLimiterClient client = new RateLimiterClient(stringRedisTemplate,rateLimiterLua);
+//        RateLimiterClient client = new RateLimiterClient(stringRedisTemplate,rateLimiterLua);
+        RateLimiterRedisClient client = new RateLimiterRedisClient();
         Token token = client.acquireToken(context, key, 1);
         System.out.println(context+":"+key+":"+token.name());
     }
