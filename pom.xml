@@ -11,8 +11,13 @@
     <modules>
         <module>zuul-example</module>
         <module>activemq-example</module>
-        <module>my-ratelimiter</module>
         <module>ratelimiter-example</module>
+        <module>storm-example</module>
+        <module>hadoop-example</module>
+        <module>spring-cloud-example</module>
+        <module>kafka-example</module>
+        <module>flink-example</module>
+        <module>rocketmq-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
