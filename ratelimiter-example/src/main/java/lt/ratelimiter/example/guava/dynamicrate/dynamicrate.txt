@@ -1,0 +1,4 @@
+实现基础是基于Guava的RateLimiter实现;
+详情代码见lt.ratelimiter.example.guava.dynamicrate.Rate.java
+根据key动态限制请求速率;
+动态设置RateLimiter的rate(每秒钟放入令牌桶的令牌数);

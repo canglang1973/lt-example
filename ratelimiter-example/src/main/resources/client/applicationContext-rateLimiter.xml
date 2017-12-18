@@ -24,7 +24,7 @@
         </property>
     </bean>
 
-    <bean id="rateLimiterClient" class="lt.ratelimiter.example.client.RateLimiterClient">
+    <bean id="rateLimiterClient" class="lt.ratelimiter.example.redis_lua.client.RateLimiterClient">
         <constructor-arg index="0" ref="stringRedisTemplate"/>
         <constructor-arg index="1" ref="rateLimiterLua"/>
     </bean>
