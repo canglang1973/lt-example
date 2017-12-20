@@ -1,9 +1,13 @@
 package lt.ratelimiter.example.redis_lua.client.jedis;
 
 import lt.ratelimiter.example.redis_lua.client.Token;
-import redis.clients.jedis.Jedis;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 /**
  * @author leitao.
@@ -11,11 +15,16 @@ import java.util.List;
  * @version: 1.0
  * @description:
  **/
+@Component("rateLimiterRedisClient")
 public class RateLimiterRedisClient {
-    private  RateLimiter rateLimiter = new RateLimiter(new Jedis("127.0.0.1"));
 
-    public RateLimiter getRateLimiter() {
-        return rateLimiter;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    private RateLimiter rateLimiter;
+
+    public RateLimiterRedisClient(RedisTemplate<String,String> redisTemplate){
+        this.rateLimiter = new RateLimiter(redisTemplate);
     }
 
     public boolean acquire(String context, String key) {
@@ -28,8 +37,12 @@ public class RateLimiterRedisClient {
     public Token acquireToken(String context, String key, Integer permits){
         Token token;
         try {
-            List<String> time = rateLimiter.getJedis().time();
-            long currMillSecond = Long.parseLong(time.get(0))*1000+Long.parseLong(time.get(1))/1000;
+            Long currMillSecond = stringRedisTemplate.execute(new RedisCallback<Long>() {
+                @Override
+                public Long doInRedis(RedisConnection connection) throws DataAccessException {
+                    return connection.time();
+                }
+            });
             int acquire = rateLimiter.acquire(key, permits, currMillSecond, context);
             if (acquire == 1) {
                 token = Token.PASS;
@@ -43,4 +56,14 @@ public class RateLimiterRedisClient {
         }
         return token;
     }
+
+    public void  init(String key, long max_permits, long rate, String apps){
+        rateLimiter.init(key, max_permits, rate, apps);
+    }
+
+    public void delete(String key){
+        rateLimiter.delete(key);
+    }
+
+
 }

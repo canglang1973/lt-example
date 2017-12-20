@@ -2,8 +2,10 @@ package lt.ratelimiter.example.redis_lua.client.jedis;
 
 import lt.ratelimiter.example.redis_lua.client.RateLimiterConstants;
 import org.apache.commons.lang3.StringUtils;
-import redis.clients.jedis.Jedis;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,20 +14,15 @@ import java.util.Map;
  * @author leitao.
  * @time: 2017/12/12  13:58
  * @version: 1.0
- * @description: 此类与rate_limiter.lua脚本方法一样
+ * @description: 此类与rate_limiter.lua脚本方法一样    令牌桶算法
  **/
 public class RateLimiter {
 
-    private Jedis jedis;
+    private HashOperations<String, String, String> hashOperations;
 
-    public RateLimiter(Jedis jedis) {
-        this.jedis = jedis;
+    public RateLimiter(RedisTemplate<String,String> redisTemplate) {
+        this.hashOperations = redisTemplate.opsForHash();
     }
-
-    public Jedis getJedis() {
-        return jedis;
-    }
-
     /**
      * 判断source_str 中是否contains sub_str
      *
@@ -61,10 +58,10 @@ public class RateLimiter {
      *
      * @return
      */
-    public int acquire(String key, long permits, long curr_mill_second, String context) {
+    public synchronized int acquire(String key, long permits, long curr_mill_second, String context) {
         key = getKey(key);
         int result = -1;
-        List<String> rate_limit_info = jedis.hmget(key, "last_mill_second", "curr_permits", "max_permits", "rate", "apps");
+        List<String> rate_limit_info = hashOperations.multiGet(key,getHashKeys());
         if (null == rate_limit_info || rate_limit_info.size() == 0) {
             return result;
         }
@@ -88,16 +85,16 @@ public class RateLimiter {
             local_curr_permits = Math.min(expect_curr_permits, max_permits);
             //大于0表示不是第一次获取令牌，也没有向桶里添加令牌
             if (reverse_permits > 0) {
-                jedis.hset(key, "last_mill_second", curr_mill_second + "");
+                hashOperations.put(key,"last_mill_second", curr_mill_second + "");
             }
         } else {
-            jedis.hset(key, "last_mill_second", curr_mill_second + "");
+            hashOperations.put(key,"last_mill_second", curr_mill_second + "");
         }
         if (local_curr_permits - permits >= 0) {
             result = 1;
-            jedis.hset(key, "curr_permits", (local_curr_permits - permits) + "");
+            hashOperations.put(key,"curr_permits", (local_curr_permits - permits) + "");
         } else {
-            jedis.hset(key, "curr_permits", local_curr_permits + "");
+            hashOperations.put(key,"curr_permits", local_curr_permits + "");
         }
         return result;
     }
@@ -110,27 +107,36 @@ public class RateLimiter {
      * @param rate        向桶里添加令牌的速率
      * @param apps        可以使用令牌桶的应用列表，应用之前用逗号分隔
      */
-    public void init(String key, long max_permits, long rate, String apps) {
+    public synchronized  void init(String key, long max_permits, long rate, String apps) {
         key = getKey(key);
-        List<String> rate_limit_info = jedis.hmget(key, "last_mill_second", "curr_permits", "max_permits", "rate", "apps");
-        Map<String, String> map = new HashMap<String, String>();
+        List<String> rate_limit_info = hashOperations.multiGet(key,getHashKeys());
         String curr_permits = rate_limit_info.get(1);
         if (null == rate_limit_info || StringUtils.isEmpty(curr_permits)) {
+            Map<String, String> map = new HashMap<String, String>(4);
             map.put("max_permits", max_permits + "");
             map.put("rate", rate + "");
             map.put("curr_permits", max_permits + "");
             map.put("apps", apps);
-            jedis.hmset(key, map);
+            hashOperations.putAll(key,map);
         }
     }
 
+    private List<String> getHashKeys(){
+        List<String> hashKeys = new ArrayList<String>(5);
+        hashKeys.add("last_mill_second");
+        hashKeys.add("curr_permits");
+        hashKeys.add("max_permits");
+        hashKeys.add("rate");
+        hashKeys.add("apps");
+        return hashKeys;
+    }
     /**
      * 删除令牌桶
      *
      * @param key
      */
-    public void delete(String key) {
-        jedis.del(getKey(key));
+    public synchronized  void delete(String key) {
+        hashOperations.delete(getKey(key));
     }
 
     private String getKey(String key) {

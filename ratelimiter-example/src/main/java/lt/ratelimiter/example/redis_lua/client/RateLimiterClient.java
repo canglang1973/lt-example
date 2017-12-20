@@ -33,7 +33,7 @@ public class RateLimiterClient {
      * @param key
      * @return
      */
-    public boolean acquire(String context, String key) {
+    public  boolean acquire(String context, String key) {
         Token token = acquireToken(context, key);
         return token.isPass() || token.isAccessRedisFail();
     }
@@ -47,7 +47,7 @@ public class RateLimiterClient {
      * @param key
      * @return
      */
-    public Token acquireToken(String context, String key) {
+    public  Token acquireToken(String context, String key) {
         return acquireToken(context, key, 1);
     }
 
@@ -59,7 +59,7 @@ public class RateLimiterClient {
      * @param permits
      * @return
      */
-    public Token acquireToken(String context, String key, Integer permits) {
+    public synchronized Token acquireToken(String context, String key, Integer permits) {
         Token token;
         try {
             Long currMillSecond = stringRedisTemplate.execute(new RedisCallback<Long>() {
@@ -83,6 +83,13 @@ public class RateLimiterClient {
             token = Token.ACCESS_REDIS_FAIL;
         }
         return token;
+    }
+
+    public void init(String key, long maxPermits, long rate, String apps) {
+        stringRedisTemplate.execute(rateLimiterClientLua,
+                ImmutableList.of(getKey(key)),
+                RateLimiterConstants.RATE_LIMITER_INIT_METHOD, maxPermits, rate, apps);
+
     }
 
     private String getKey(String key) {

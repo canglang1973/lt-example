@@ -5,14 +5,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import lt.ratelimiter.example.redis_lua.client.RateLimiterClient;
 import lt.ratelimiter.example.redis_lua.client.RateLimiterConstants;
-import lt.ratelimiter.example.redis_lua.client.Token;
-import lt.ratelimiter.example.redis_lua.client.jedis.RateLimiter;
 import lt.ratelimiter.example.redis_lua.client.jedis.RateLimiterRedisClient;
 import lt.ratelimiter.example.redis_lua.server.dao.RateDao;
-import lt.ratelimiter.example.redis_lua.server.vo.RateLimiterVo;
 import lt.ratelimiter.example.redis_lua.server.domain.RateLimiterInfo;
 import lt.ratelimiter.example.redis_lua.server.form.RateLimiterForm;
+import lt.ratelimiter.example.redis_lua.server.vo.RateLimiterVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,11 @@ public class RateLimiterService implements InitializingBean {
 
     private RateDao rateDao = new RateDao();
 
-    private RateLimiterRedisClient client = new RateLimiterRedisClient();
+    @Autowired
+    private RateLimiterRedisClient rateLimiterRedisClient;
+
+    @Autowired
+    private RateLimiterClient rateLimiterClient;
 
 //    @Autowired
 //    private RateLimiterInfoMapper rateLimiterInfoMapper;
@@ -144,11 +147,10 @@ public class RateLimiterService implements InitializingBean {
                     log.info("diff db and redis job start.....");
                     List<RateLimiterInfo> rateLimiterInfoList = rateDao.selectAll();
                     for (RateLimiterInfo rateLimiterInfo : rateLimiterInfoList) {
-                        RateLimiter rateLimiter = client.getRateLimiter();
-                        rateLimiter.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
-//                        stringRedisTemplate.execute(rateLimiterLua,
-//                                ImmutableList.of(getKey(rateLimiterInfo.getName())),
-//                                RateLimiterConstants.RATE_LIMITER_INIT_METHOD, rateLimiterInfo.getMaxPermits().toString(), rateLimiterInfo.getRate().toString(), rateLimiterInfo.getApps());
+                        //调用java实现代码
+                        rateLimiterRedisClient.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
+                        //调用lua实现代码
+                        rateLimiterClient.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
                     }
                     log.info("diff db and redis job end.....");
                 } catch (Exception e) {
@@ -160,8 +162,8 @@ public class RateLimiterService implements InitializingBean {
 
     public void rateTest(String context,String key){
 //        RateLimiterClient client = new RateLimiterClient(stringRedisTemplate,rateLimiterLua);
-        RateLimiterRedisClient client = new RateLimiterRedisClient();
-        Token token = client.acquireToken(context, key, 1);
-        System.out.println(context+":"+key+":"+token.name());
+//        RateLimiterRedisClient client = new RateLimiterRedisClient();
+//        Token token = client.acquireToken(context, key, 1);
+//        System.out.println(context+":"+key+":"+token.name());
     }
 }
