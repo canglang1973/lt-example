@@ -19,6 +19,7 @@
         <module>flink-example</module>
         <module>rocketmq-example</module>
         <module>jstorm-example</module>
+        <module>netty-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
