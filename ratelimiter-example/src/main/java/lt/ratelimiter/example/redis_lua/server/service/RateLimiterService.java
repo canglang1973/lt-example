@@ -7,7 +7,7 @@ import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import lt.ratelimiter.example.redis_lua.client.RateLimiterClient;
 import lt.ratelimiter.example.redis_lua.client.RateLimiterConstants;
-import lt.ratelimiter.example.redis_lua.client.jedis.RateLimiterRedisClient;
+import lt.ratelimiter.example.redis_lua.client.redis.tokenbucket.RateLimiterRedisClient;
 import lt.ratelimiter.example.redis_lua.server.dao.RateDao;
 import lt.ratelimiter.example.redis_lua.server.domain.RateLimiterInfo;
 import lt.ratelimiter.example.redis_lua.server.form.RateLimiterForm;

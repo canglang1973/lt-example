@@ -1,4 +1,4 @@
-package lt.ratelimiter.example.redis_lua.client.jedis;
+package lt.ratelimiter.example.redis_lua.client.redis.tokenbucket;
 
 import lt.ratelimiter.example.redis_lua.client.RateLimiterConstants;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +19,7 @@ import java.util.Map;
 public class RateLimiter {
 
     private HashOperations<String, String, String> hashOperations;
+
 
     public RateLimiter(RedisTemplate<String,String> redisTemplate) {
         this.hashOperations = redisTemplate.opsForHash();

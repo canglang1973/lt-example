@@ -1,8 +1,8 @@
 package lt.ratelimiter.example;
 
 import lt.ratelimiter.example.redis_lua.client.RateLimiterClient;
-import lt.ratelimiter.example.redis_lua.client.jedis.LeakyBucketRateLimiterRedisClient;
-import lt.ratelimiter.example.redis_lua.client.jedis.RateLimiterRedisClient;
+import lt.ratelimiter.example.redis_lua.client.redis.leakbucket.LeakyBucketRateLimiterRedisClient;
+import lt.ratelimiter.example.redis_lua.client.redis.tokenbucket.RateLimiterRedisClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

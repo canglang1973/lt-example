@@ -1,0 +1,7 @@
+第一次实现:
+redis-jedis实现
+为了实现方便连接redis就没有使用连接池那些.
+相当于用jedis重写了lua脚本的逻辑方法;
+
+第二次改造:
+使用jedis简单连接在多线程情况下导致redis连接不可用,所以改成使用RedisTemplate并使用连接池

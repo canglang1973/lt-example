@@ -1,4 +1,4 @@
-package lt.ratelimiter.example.redis_lua.client.jedis;
+package lt.ratelimiter.example.redis_lua.client.redis.tokenbucket;
 
 import lt.ratelimiter.example.redis_lua.client.Token;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,10 @@ public class RateLimiterRedisClient {
 
     private RateLimiter rateLimiter;
 
+    /**
+     * Spring容器会自动将redisTemplate注入到此构造方法中
+     * @param redisTemplate
+     */
     public RateLimiterRedisClient(RedisTemplate<String,String> redisTemplate){
         this.rateLimiter = new RateLimiter(redisTemplate);
     }

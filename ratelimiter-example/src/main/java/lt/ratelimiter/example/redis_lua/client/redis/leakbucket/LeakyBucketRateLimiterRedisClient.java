@@ -1,4 +1,4 @@
-package lt.ratelimiter.example.redis_lua.client.jedis;
+package lt.ratelimiter.example.redis_lua.client.redis.leakbucket;
 
 import lt.ratelimiter.example.redis_lua.client.Token;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,6 +15,10 @@ public class LeakyBucketRateLimiterRedisClient {
 
     private  LeakyBucketRateLimiter rateLimiter;
 
+    /**
+     * Spring容器会自动将redisTemplate注入到此构造方法中
+     * @param redisTemplate
+     */
     public  LeakyBucketRateLimiterRedisClient(RedisTemplate<String,String> redisTemplate) {
         this.rateLimiter = new LeakyBucketRateLimiter(redisTemplate);
     }

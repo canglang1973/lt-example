@@ -1,4 +1,4 @@
-package lt.ratelimiter.example.redis_lua.client.jedis;
+package lt.ratelimiter.example.redis_lua.client.redis.leakbucket;
 
 import lt.ratelimiter.example.redis_lua.client.RateLimiterConstants;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +18,7 @@ import java.util.Map;
 public class LeakyBucketRateLimiter {
 
     private HashOperations<String, String, String> hashOperations;
+
 
     public LeakyBucketRateLimiter(RedisTemplate<String,String> redisTemplate) {
         this.hashOperations = redisTemplate.opsForHash();

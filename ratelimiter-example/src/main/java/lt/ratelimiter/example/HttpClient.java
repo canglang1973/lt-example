@@ -10,6 +10,7 @@ import java.net.URL;
  * @version: 1.0
  * @description:
  **/
+
 public class HttpClient {
 
     public  static void  main(String[] args) throws Exception{
@@ -19,7 +20,6 @@ public class HttpClient {
             invoker(serverUrl,paramsBuffer.toString());
         }
     }
-
     public static String invoker (String serverUrl, String args) throws Exception {
         URL url = new URL(serverUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
