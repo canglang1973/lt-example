@@ -20,6 +20,7 @@
         <module>rocketmq-example</module>
         <module>jstorm-example</module>
         <module>netty-example</module>
+        <module>hotswap-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
