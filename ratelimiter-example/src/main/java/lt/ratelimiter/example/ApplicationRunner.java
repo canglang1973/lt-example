@@ -23,8 +23,8 @@ public class ApplicationRunner {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ApplicationRunner.class, args);
 //        RedisLuaTest(context);
-//        RedisJavaTest(context);
-        LeakyBucketRedisJavaTest(context);
+        RedisJavaTest(context);
+//        LeakyBucketRedisJavaTest(context);
     }
     private static void RedisLuaTest(ConfigurableApplicationContext context){
         RateLimiterClient client = (RateLimiterClient) context.getBean("rateLimiterClient");
@@ -42,11 +42,15 @@ public class ApplicationRunner {
     }
     private static void RedisJavaTest(ConfigurableApplicationContext context){
         RateLimiterRedisClient client = (RateLimiterRedisClient) context.getBean("rateLimiterRedisClient");
-        for (int i=0 ;i<10;i++){
+        for (int i=0 ;i<3;i++){
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i=0 ;i<1000;i++) {
+                    for (int i=0 ;i<100;i++) {
+                        try {
+                            Thread.sleep(500L);
+                        } catch (InterruptedException e) {
+                        }
                         boolean acquire = client.acquire("leitao", "APP");
                         System.out.println(acquire);
                     }

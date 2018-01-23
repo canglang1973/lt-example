@@ -13,18 +13,24 @@ import java.util.concurrent.Semaphore;
 public class SemphoreFlowControl {
 
     public  static void main(String[] args){
+        //线程池
         ExecutorService executor = Executors.newCachedThreadPool();
-        Semaphore semaphore = new Semaphore(20);
+        //最多只允许5个线程同时访问,即初始化5个许可证
+        Semaphore semaphore = new Semaphore(5);
+        //模拟20个客户端访问
         for (int i=0;i<20;i++){
             int no = i;
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        //获取许可继续执行,如果没有获取到线程将一直阻塞在这儿
                         semaphore.acquire();
                         System.out.println("Accessing:"+no);
                         Thread.sleep((long) (Math.random()*1000));
+                        //运行完释放许可
                         semaphore.release();
+                        //打印出目前可用的许可
                         System.out.println("*"+semaphore.availablePermits());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -33,6 +39,7 @@ public class SemphoreFlowControl {
             };
             executor.submit(runnable);
         }
+        //退出线程池
         executor.shutdown();
     }
 }

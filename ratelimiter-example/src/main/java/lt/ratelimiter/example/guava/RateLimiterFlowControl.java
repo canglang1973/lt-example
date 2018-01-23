@@ -17,28 +17,35 @@ import java.util.concurrent.TimeUnit;
  **/
 public class RateLimiterFlowControl {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         ExecutorService executor = Executors.newCachedThreadPool();
 
 //        RateLimiter rateLimiter = RateLimiter.create(10);//每秒放入的令牌数
-        RateLimiter rateLimiter = RateLimiter.create(1,200,TimeUnit.SECONDS);//预热
-        for(int i=0;i<20;i++){
+        //在20秒中内许可会平稳增加到100,当一段时间没有请求许可又将恢复为0
+        RateLimiter rateLimiter = RateLimiter.create(100,20,TimeUnit.SECONDS);//预热
+        for(int i=0;i<10;i++){
             int no=i;
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    rateLimiter.acquire(10);
-//                    boolean b = rateLimiter.tryAcquire(1);
+                    double acquire = rateLimiter.acquire(2);
+                    System.out.println(no+"================"+acquire);
+
+                    try {
+                        Thread.sleep(100L);
+                    } catch (InterruptedException e) {
+                    }
+//                    boolean b = rateLimiter.tryAcquire(1);//必须在无延迟的情况下立即获取才返回true
+//                    boolean b = rateLimiter.tryAcquire(1,2, TimeUnit.SECONDS);//允许延迟2秒
 //                    if (!b){
 //                        System.out.println("访问频率过高:"+no);
 //                    }else {
-//                        System.out.println("========"+no+"rate:"+rateLimiter.getRate());
-//
+//                        System.out.println("========"+no);
 //                    }
                 }
             };
             executor.submit(runnable);
         }
-
+        executor.shutdown();
     }
 }

@@ -1,15 +1,12 @@
 package lt.zuul.example.filter;
 
-import com.google.common.util.concurrent.RateLimiter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.*;
 
 /**
  * @author leitao.
@@ -17,7 +14,7 @@ import java.util.concurrent.*;
  * @version: 1.0
  * @description: 在请求来临时执行,在route Filter之前执行
  **/
-//@Component
+@Component
 public class AccessFilter extends ZuulFilter {
     private static Logger log = LoggerFactory.getLogger(AccessFilter.class);
 
@@ -44,6 +41,7 @@ public class AccessFilter extends ZuulFilter {
         System.out.println("我是前置过滤器...我在鉴权哟...");
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
+        System.out.println("=========="+request.getParameter("appKey"));
 //        log.info("send {} request to {}", request.getMethod(), request.getRequestURL().toString());
 //
 //        String[] methods = request.getParameterValues("method");
@@ -54,9 +52,9 @@ public class AccessFilter extends ZuulFilter {
             //过滤该请求，不往下级服务去转发请求，到此结束
             //注意，路由转发的停止和继续是由ctx.setSendZuulResponse来控制的，
             // 与下面的return null无关，这个方法的return值没有意义，并没有使用。
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(401);
-            ctx.setResponseBody("{\"result\":\"accessToken is empty!\"}");
+//            ctx.setSendZuulResponse(false);
+//            ctx.setResponseStatusCode(401);
+//            ctx.setResponseBody("{\"result\":\"accessToken is empty!\"}");
 //            return null;
 //        }
         //如果有token，则进行路由转发

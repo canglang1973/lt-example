@@ -150,7 +150,7 @@ public class RateLimiterService implements InitializingBean {
                         //调用java实现代码
                         rateLimiterRedisClient.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
                         //调用lua实现代码
-                        rateLimiterClient.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
+//                        rateLimiterClient.init(rateLimiterInfo.getName(),rateLimiterInfo.getMaxPermits(), rateLimiterInfo.getRate(), rateLimiterInfo.getApps());
                     }
                     log.info("diff db and redis job end.....");
                 } catch (Exception e) {
