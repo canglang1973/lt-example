@@ -3,12 +3,10 @@ package lt.zuul.example.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author leitao.
@@ -16,7 +14,7 @@ import java.util.concurrent.Executors;
  * @version: 1.0
  * @description: 请求响应时过滤
  **/
-//@Component
+@Component
 public class PostFilter extends ZuulFilter {
     @Override
     public String filterType() {
@@ -37,6 +35,7 @@ public class PostFilter extends ZuulFilter {
     public Object run() {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
+        HttpServletResponse response = requestContext.getResponse();
         String contextPath = request.getContextPath();
         String remoteAddr = request.getRemoteAddr();
         System.out.println("POST Filter return result:"+contextPath+"===="+remoteAddr);

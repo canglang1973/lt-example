@@ -21,6 +21,7 @@
         <module>jstorm-example</module>
         <module>netty-example</module>
         <module>hotswap-example</module>
+        <module>common-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author leitao.
@@ -41,6 +42,7 @@ public class AccessFilter extends ZuulFilter {
         System.out.println("我是前置过滤器...我在鉴权哟...");
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
+        HttpServletResponse response = ctx.getResponse();
         System.out.println("=========="+request.getParameter("appKey"));
 //        log.info("send {} request to {}", request.getMethod(), request.getRequestURL().toString());
 //
