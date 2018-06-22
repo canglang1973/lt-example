@@ -1,6 +1,8 @@
 package lt.zuul.example.dynamicrate;
 
 import com.google.common.util.concurrent.RateLimiter;
+import lombok.Data;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -9,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @version: 1.0
  * @description:
  **/
+@Data
 public class Rate {
     /**
      * 是否是脏数据
@@ -26,6 +29,25 @@ public class Rate {
      *预热时间
      */
     private long warmupPeriod=10;
+
+    /**
+     * 预热时间单位
+     */
+    private TimeUnit warmupTimeUnit = TimeUnit.SECONDS;
+    /**
+     * tryAcquire()超时时间
+     */
+    private long acquireTimeout = 0;
+
+    /**
+     * tryAcquire超时时间单位
+     */
+    private TimeUnit acquireTimeoutTimeUnit = TimeUnit.SECONDS;
+
+    /**
+     * 需要的许可证数量
+     */
+    private int acquirePermits = 1;
 
     private  RateLimiter rateLimiter = null;
 
@@ -48,33 +70,5 @@ public class Rate {
         }
         System.out.println("rateLimiter is not null!");
         return  rateLimiter;
-    }
-
-    public double getDefaultRate() {
-        return defaultRate;
-    }
-
-    public double getRate() {
-        return this.rate;
-    }
-
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
-    }
-
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
-    public void setWarmupPeriod(long warmupPeriod) {
-        this.warmupPeriod = warmupPeriod;
-    }
-
-    public long getWarmupPeriod() {
-        return warmupPeriod;
     }
 }

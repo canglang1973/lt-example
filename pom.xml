@@ -11,6 +11,17 @@
     <modules>
         <module>zuul-example</module>
         <module>activemq-example</module>
+        <module>ratelimiter-example</module>
+        <module>storm-example</module>
+        <module>hadoop-example</module>
+        <module>spring-cloud-example</module>
+        <module>kafka-example</module>
+        <module>flink-example</module>
+        <module>rocketmq-example</module>
+        <module>jstorm-example</module>
+        <module>netty-example</module>
+        <module>hotswap-example</module>
+        <module>common-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +38,8 @@
         <log4jdbc.version>1.2</log4jdbc.version>
         <guava.version>19.0</guava.version>
         <commons-lang3.version>3.5</commons-lang3.version>
+        <lombok.version>1.16.10</lombok.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <dependencies>
@@ -62,6 +75,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 

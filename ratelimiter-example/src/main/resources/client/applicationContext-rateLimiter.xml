@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="rateLimiterLua" class="org.springframework.data.redis.core.script.DefaultRedisScript">
+        <property name="location" value="classpath:client/rate_limiter.lua"/>
+        <property name="resultType" value="java.lang.Long"/>
+    </bean>
+
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--可以再次自定义redis连接池参数-->
+    </bean>
+
+    <bean id="connectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${rate.limiter.redis.host}"
+          p:port="${rate.limiter.redis.port}"
+          p:pool-config-ref="poolConfig"/>
+
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+    </bean>
+
+    <bean id="rateLimiterClient" class="lt.ratelimiter.example.redis_lua.client.RateLimiterClient">
+        <constructor-arg index="0" ref="stringRedisTemplate"/>
+        <constructor-arg index="1" ref="rateLimiterLua"/>
+    </bean>
+
+</beans>

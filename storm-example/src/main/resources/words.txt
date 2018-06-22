@@ -1,0 +1,3 @@
+The stream is the core abstraction r own serial within tuples.
+Every stream is ult id of "default".
+kkkkkkkkkkkkkkkkkkkkkkkkkkk
