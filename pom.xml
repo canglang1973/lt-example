@@ -22,6 +22,8 @@
         <module>netty-example</module>
         <module>hotswap-example</module>
         <module>common-example</module>
+        <module>elk-example</module>
+        <module>jackson-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
