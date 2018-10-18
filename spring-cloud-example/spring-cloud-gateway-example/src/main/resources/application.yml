@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: spring-cloud-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: xujin_route
+        uri: http://www.xujin.org:80/
+        predicates:
+        - Path=/xujin
+
+
