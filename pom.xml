@@ -24,6 +24,7 @@
         <module>common-example</module>
         <module>elk-example</module>
         <module>jackson-example</module>
+        <module>algorithm-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
