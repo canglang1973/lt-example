@@ -26,6 +26,7 @@
         <module>jackson-example</module>
         <module>algorithm-example</module>
         <module>influxdb-example</module>
+        <module>postgresql-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
