@@ -3,10 +3,7 @@ package com.canglang.common.proxy.spliterator;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.stream.*;
 
 /**
  * @author leitao.
@@ -18,24 +15,48 @@ import java.util.stream.StreamSupport;
 public class SpliteratorTest {
 
     public static void main(String[] args){
+
         List<Integer> arr = new ArrayList<>();
-        for (int i=0;i<11;i++){
+        for (int i=0;i<10;i++){
             arr.add(i);
         }
-        Spliterator<Integer> a = arr.spliterator();
-        Spliterator<Integer> b = a.trySplit();
-        Spliterator<Integer> c = b.trySplit();
-        Stream<Integer> stream = StreamSupport.stream(a, true);
-        Stream<Integer> stream1 = StreamSupport.stream(b, true);
-        Stream<Integer> stream2 = StreamSupport.stream(c, true);
-        List<Integer> collect = stream.collect(Collectors.toList());
-        List<Integer> collect1 = stream1.collect(Collectors.toList());
-        List<Integer> collect2 = stream2.collect(Collectors.toList());
         Integer min = arr.stream().min(Integer::compareTo).get();
         List<Integer> collect3 = arr.stream().filter(integer -> integer > 5 ).collect(Collectors.toList());
+        Integer integer = collect3.stream().findAny().get();
+        List<String> strings = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            strings.add(i+"");
+        }
+        String join = strings.stream().collect(Collectors.joining(","));
+        List<String> collect = strings.stream().map(i -> i + i).collect(Collectors.toList());
+        String[] words = new String[]{"Hello","World"};
+        List<String> a = Arrays.stream(words)
+                .map(word -> word.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+
+//        allMatch表示，判断条件里的元素，所有的都是，返回true
+        boolean b = strings.stream().allMatch(aa -> aa.equals("3"));
+//        anyMatch表示，判断的条件里，任意一个元素成功，返回true
+        boolean b2 = strings.stream().anyMatch(aa -> aa.equals("3"));
+        Double average = strings.stream().mapToInt(s -> Integer.valueOf(s.trim())).average().getAsDouble();
+
+        List<Integer> integers = new ArrayList<>();
+        for (int i=0;i<100;i++){
+            integers.add(i);
+        }
+        Spliterator<Integer> spliterator = integers.spliterator();
+        List<Spliterator<Integer>> ss = new ArrayList<>();
+        for (int i=0;i<integers.size()/20;i++){
+            Spliterator<Integer> integerSpliterator = spliterator.trySplit();
+            Spliterator<Integer> integerSpliterator1 = integerSpliterator.trySplit();
+            System.out.println();
+        }
+
         System.out.println();
 //        filter();
-        parallelStream();
+//        parallelStream();
     }
 
     private static void filter(){
