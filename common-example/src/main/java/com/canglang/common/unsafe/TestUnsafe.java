@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.unsafe;
+package com.canglang.common.unsafe;
 
 import sun.misc.Unsafe;
 

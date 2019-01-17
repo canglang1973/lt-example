@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.executor_policy;
+package com.canglang.common.executor_policy;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

@@ -1,6 +1,6 @@
-package com.canglang.common.proxy.cglibproxy;
+package com.canglang.common.cglibproxy;
 
-import com.canglang.common.proxy.staticproxy.UserDao;
+import com.canglang.common.staticproxy.UserDao;
 
 /**
  * @author leitao.

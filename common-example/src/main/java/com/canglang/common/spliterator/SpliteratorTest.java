@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.spliterator;
+package com.canglang.common.spliterator;
 
 import java.util.*;
 import java.util.concurrent.locks.Lock;

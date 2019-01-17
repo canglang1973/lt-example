@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.executor_policy;
+package com.canglang.common.executor_policy;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit;
  * @time: 2019/1/15 0015-14:48
  * @version: 1.0
  * @description: 运行结果:
- * java.util.concurrent.RejectedExecutionException: Task com.canglang.common.proxy.executor_policy.MyRunnable@7cef4e59 rejected from java.util.concurrent.ThreadPoolExecutor@3cd1f1c8[Running, pool size = 1, active threads = 1, queued tasks = 1, completed tasks = 0]
+ * java.util.concurrent.RejectedExecutionException: Task MyRunnable@7cef4e59 rejected from java.util.concurrent.ThreadPoolExecutor@3cd1f1c8[Running, pool size = 1, active threads = 1, queued tasks = 1, completed tasks = 0]
  * at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2047)
  * at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:823)
  * at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1369)
- * at com.canglang.common.proxy.executor_policy.AbortPolicyDemo.main(AbortPolicyDemo.java:32)
+ * at AbortPolicyDemo.main(AbortPolicyDemo.java:32)
  * task-0 is running.
  * task-1 is running.
  * 结果说明：

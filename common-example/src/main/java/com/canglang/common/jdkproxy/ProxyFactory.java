@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.jdkproxy;
+package com.canglang.common.jdkproxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

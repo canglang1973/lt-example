@@ -1,7 +1,7 @@
-package com.canglang.common.proxy.jdkproxy;
+package com.canglang.common.jdkproxy;
 
-import com.canglang.common.proxy.staticproxy.IUserDao;
-import com.canglang.common.proxy.staticproxy.UserDao;
+import com.canglang.common.staticproxy.IUserDao;
+import com.canglang.common.staticproxy.UserDao;
 
 /**
  * @author leitao.

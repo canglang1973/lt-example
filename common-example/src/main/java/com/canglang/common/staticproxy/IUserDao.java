@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.staticproxy;
+package com.canglang.common.staticproxy;
 
 /**
  * @author leitao.

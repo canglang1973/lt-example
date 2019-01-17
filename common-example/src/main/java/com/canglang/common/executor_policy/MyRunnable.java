@@ -1,4 +1,4 @@
-package com.canglang.common.proxy.executor_policy;
+package com.canglang.common.executor_policy;
 
 /**
  * @author leitao.
