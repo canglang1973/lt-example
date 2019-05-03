@@ -21,6 +21,7 @@ public class ShellSort extends Sort {
             for (int i = h; i < N; i++) {
                 //将a[i]插入到a[i-h],a[i-2*h],a[i-3*h]...之中
                 for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
+                    System.out.println("=======" + h);
                     exch(a, j, j - h);
                 }
             }
@@ -29,7 +30,7 @@ public class ShellSort extends Sort {
     }
 
     public static void main(String[] args) {
-        args = new String[] {"S","H","E","L","L","S","O","R","T","E","X","A","M","P","L","E"};
+        args = new String[]{"S", "H", "E", "L", "L", "S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
         ShellSort sort = new ShellSort();
         sort.sort(args);
         boolean sort1 = isSort(args);
