@@ -21,7 +21,7 @@ package com.canglang.algorithm.letcode;
  * <p>
  * 所有输入只包含小写字母 a-z 。
  **/
-public class LongestCommonPrefix {
+public class LongestCommonPrefix_14 {
 
     public static void main(String[] args) {
         String[] strings = new String[]{"c"};
