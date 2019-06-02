@@ -5,7 +5,7 @@ package com.canglang.algorithm.sort;
  * @category
  * @time: 2019/5/26/026-9:57
  * @version: 1.0
- * @description: 自顶向下的归并排序
+ * @description:
  **/
 public class MergeSort extends Sort {
 
@@ -14,10 +14,33 @@ public class MergeSort extends Sort {
      */
     private static Comparable[] aux;
 
+    /**
+     * 自顶向下的归并排序
+     *
+     * @param a
+     */
     public void sort(Comparable[] a) {
         //一次性分配空间
         aux = new Comparable[a.length];
-        sort(a,0,a.length-1);
+        sort(a, 0, a.length - 1);
+    }
+
+    /**
+     * 自底向上的归并排序
+     *
+     * @param a
+     */
+    public static void sortBU(Comparable[] a) {
+        //一次性分配空间
+        int N = a.length;
+        aux = new Comparable[N];
+        //sz子数组大小
+        for (int sz = 1; sz < N; sz = sz + sz) {
+            //lo:子数组索引
+            for (int lo = 0; lo < N - sz; lo += sz + sz) {
+                merge(a, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, N - 1));
+            }
+        }
     }
 
     private static void sort(Comparable[] a, int lo, int hi) {
@@ -33,6 +56,7 @@ public class MergeSort extends Sort {
 
     /**
      * 将a[lo..mid]和a[mid+1..hi]归并
+     *
      * @param a
      * @param lo
      * @param mid
@@ -58,10 +82,11 @@ public class MergeSort extends Sort {
         }
     }
 
-    public static void main(String[] args){
-        args = new String[]{"M", "E", "R", "G", "E", "S", "O", "R", "T", "E", "X","A","M","P","L","E"};
+    public static void main(String[] args) {
+        args = new String[]{"M", "E", "R", "G", "E", "S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
         MergeSort sort = new MergeSort();
-        sort.sort(args);
+//        sort.sort(args);
+        sortBU(args);
         assert isSort(args);
         show(args);
     }
