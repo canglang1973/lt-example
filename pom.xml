@@ -13,20 +13,14 @@
         <module>activemq-example</module>
         <module>ratelimiter-example</module>
         <module>storm-example</module>
-        <module>hadoop-example</module>
         <module>spring-cloud-example</module>
-        <module>kafka-example</module>
-        <module>flink-example</module>
-        <module>rocketmq-example</module>
-        <module>jstorm-example</module>
-        <module>netty-example</module>
         <module>hotswap-example</module>
         <module>common-example</module>
         <module>elk-example</module>
-        <module>jackson-example</module>
         <module>algorithm-example</module>
         <module>influxdb-example</module>
         <module>postgresql-example</module>
+        <module>dubbo27-example</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

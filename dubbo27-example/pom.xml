@@ -5,27 +5,30 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.4.RELEASE</version>
+        <version>1.5.14.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jstorm-example</artifactId>
+    <groupId>lt-example</groupId>
+    <artifactId>dubbo2.7-example</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <dubbo.version>2.7.3</dubbo.version>
+    </properties>
+
     <dependencies>
         <dependency>
-            <groupId>com.alibaba.jstorm</groupId>
-            <artifactId>jstorm-core</artifactId>
-            <version>2.2.1</version>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>${dubbo.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.esotericsoftware.kryo</groupId>
-            <artifactId>kryo</artifactId>
-            <version>2.22</version>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter</groupId>
-            <artifactId>chill-java</artifactId>
-            <version>0.8.1</version>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-dependencies-zookeeper</artifactId>
+            <version>${dubbo.version}</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
