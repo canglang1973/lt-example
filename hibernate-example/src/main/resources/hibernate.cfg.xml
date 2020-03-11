@@ -1,0 +1,39 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--配置数据库驱动-->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/local_db?useUnicode=true&amp;characterEncoding=utf-8</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456</property>
+        <!--
+        配置方言，指定用的什么数据库
+        sql语句方言，我们在上面设置了数据库的信息是mysql
+        mysql 中的sql语句limit在Oracle中没有
+        所以要设置方言
+        -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
+        <!--设置hibernate执行SQL语句的时候，自动显示在控制台上-->
+        <property name="hibernate.show_sql">true</property>
+        <!--设置显示的格式-->
+        <property name="hibernate.format_sql">true</property>
+        <!--
+        设置数据库表的生成策略,自动建表
+        测试时：
+            create  每次执行hibernate 就会创建新的表，原来的数据就会丢失
+            create-drop 每次执行完hibernate之后就会将表给删除掉 原来的数据就会丢失
+        开发时：
+            update  每次启动检查数据表是否有有更新，如果有则自动更新，如果没有，则不变
+        validate    校验  对数据表不进行任何操作
+        具体看:org.hibernate.tool.schema.Action
+        -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <!--<property name="hibernate.hbm2ddl.auto">none</property>-->
+        <!--加载映射文件，将hbm配置文件或者全类名配置到核心文件中，使其自动读取-->
+        <mapping class="com.canglang.hibernate.po.GradePo"/>
+        <mapping resource="com/canglang/hibernate/po/StudentPo.hbm.xml"/>
+    </session-factory>
+
+</hibernate-configuration>

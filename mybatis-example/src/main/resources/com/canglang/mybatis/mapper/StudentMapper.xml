@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.canglang.mybatis.mapper.StudentMapper">
+    <select id="selectStudentById" parameterType="java.lang.Integer" resultType="StudentPo">
+        select * from student where id = #{id}
+    </select>
+</mapper>

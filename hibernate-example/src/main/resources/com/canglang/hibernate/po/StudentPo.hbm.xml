@@ -1,0 +1,38 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!--name:Javabean类的相对路径,table:数据库表名-->
+    <class name="com.canglang.hibernate.po.StudentPo" table="student">
+        <!--
+        id:数据库中的主键，对应的是Javabean类中id(主键)，和数据表中的主键，
+        name:代表的是实体类中的名字
+        column：代表的是字段名(可以省略不写)
+        -->
+        <id name="id" column="id">
+            <!--
+            generator：主键生成策略
+                代理主键
+                    identity    是由数据库自己维护，id自动加一
+                    increment   数据库自己维护，自动查询表中数据，然后进行id加1
+                    hilo    高低位生成主键，需要用到一个额外的表，所有的数据库都可以使用这种类型
+                    native  我们用的(代表的上面三个)
+                    uuid    (Java api 的生成策略，要自己去设置主键，)
+                自然主键
+                    assigned    手工指定，比如指定UUID
+            -->
+            <generator class="identity"/>
+        </id>
+        <!--
+        其他的属性
+        这里也可以设置数据库中字段的属性
+        type    生成表中的类型
+        legth
+        not-null
+        -->
+        <property name="name" column="`name`" length="32"/>
+        <property name="age" column="age" length="3"/>
+        <property name="gender" column="gender" length="2"/>
+        <property name="createTime" column="create_time"/>
+    </class>
+</hibernate-mapping>
