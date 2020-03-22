@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.Properties;
  * @category
  * @time: 2020-3-3-11:05
  * @version: 1.0
- * @description: 本demo目的是为了更好的阅读Hibernate源码,更好的理解调用流程
+ * @description: 本demo目的是为了更好的阅读Hibernate源码, 更好的理解调用流程
  **/
 public class HibernateDemo {
 
@@ -41,6 +42,24 @@ public class HibernateDemo {
          * 不开启事务不会将数据保存到数据库
          * */
         Transaction transaction = session.beginTransaction();
+        saveStudent(session);
+        selectStudentByOid(session);
+        selectStudentByHql(session);
+        selectStudentBySql(session);
+
+        saveGrade(session);
+        Query namedQuery = session.getNamedQuery("grade.query");
+        namedQuery.setParameter("id",1);
+        List list = namedQuery.list();
+
+//        /*提交事务*/
+        transaction.commit();
+        /*关闭资源*/
+        session.close();
+        sessionFactory.close();
+    }
+
+    private static void saveStudent(Session session) {
         /*向数据表中插入一条数据*/
         StudentPo student = new StudentPo();
         student.setName("张三");
@@ -49,14 +68,28 @@ public class HibernateDemo {
         student.setCreateTime(new Date());
         /*添加、保存方法*/
         session.save(student);
-        NativeQuery sqlQuery = session.createSQLQuery("select * from student");
+    }
+
+    private static void selectStudentByOid(Session session){
+        StudentPo studentPo = session.get(StudentPo.class, 1);
+        StudentPo load = session.load(StudentPo.class, 1);
+        System.out.println();
+    }
+
+    private static void selectStudentByHql(Session session) {
+        List list = session.createQuery("from StudentPo ").list();
+        System.out.println(list);
+    }
+
+    private static void selectStudentBySql(Session session) {
+        NativeQuery sqlQuery = session.createSQLQuery("select * from student where id = :id");
+        sqlQuery.setParameter("id", 1);
         List list = sqlQuery.list();
-//        /*提交事务*/
-        GradePo grade = new GradePo(1,100.0,"语文",new Date());
+        System.out.println(list);
+    }
+
+    private static void saveGrade(Session session) {
+        GradePo grade = new GradePo(1, 100.0, "语文", new Date());
         session.save(grade);
-        transaction.commit();
-        /*关闭资源*/
-        session.close();
-        sessionFactory.close();
     }
 }

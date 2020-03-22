@@ -3,10 +3,6 @@ package com.canglang.hibernate.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GeneratorType;
-
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,6 +14,7 @@ import java.util.Date;
  * @version: 1.0
  * @description: 使用注解的方式
  **/
+@org.hibernate.annotations.NamedQuery(name = "grade.query",query = "from GradePo where id = :id")
 @Data
 @Table(name = "grade")
 @Entity
