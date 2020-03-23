@@ -22,8 +22,10 @@ package com.canglang.common.commonbase;
  * 计算结果是:3
  * 那么这个二进制数表示的十进制数就是:-3
  **/
+@CustomAnnotation
 public class JavaOperator {
 
+    @CustomAnnotation
     public static void main(String[] args) {
         bitwiseAnd(3, 5);
         logicalAnd(true, false);
