@@ -2,6 +2,7 @@ package com.canglang.hibernate;
 
 import com.canglang.hibernate.po.GradePo;
 import com.canglang.hibernate.po.StudentPo;
+import com.canglang.hibernate.po.TeacherPo;
 import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,9 +13,7 @@ import org.hibernate.query.Query;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author leitao.
@@ -43,14 +42,12 @@ public class HibernateDemo {
          * */
         Transaction transaction = session.beginTransaction();
         saveStudent(session);
+        selectStudentByXml(session);
         selectStudentByOid(session);
         selectStudentByHql(session);
         selectStudentBySql(session);
 
-        saveGrade(session);
-        Query namedQuery = session.getNamedQuery("grade.query");
-        namedQuery.setParameter("id",1);
-        List list = namedQuery.list();
+//        saveGrade(session);
 
 //        /*提交事务*/
         transaction.commit();
@@ -61,13 +58,28 @@ public class HibernateDemo {
 
     private static void saveStudent(Session session) {
         /*向数据表中插入一条数据*/
-        StudentPo student = new StudentPo();
-        student.setName("张三");
-        student.setAge(20);
-        student.setGender("男");
-        student.setCreateTime(new Date());
+        Set<GradePo> gradePos = new HashSet<GradePo>();
+        StudentPo student = new StudentPo("张三","男",20,new Date());
+        gradePos.add(new GradePo(100.0, "语文", new Date()));
+        student.setGrades(gradePos);
+        Set<TeacherPo> teacherPos = new HashSet<TeacherPo>();
+        TeacherPo teacherPo1 = new TeacherPo("王老师");
+        TeacherPo teacherPo2 = new TeacherPo("张老师");
+        teacherPos.add(teacherPo1);
+        teacherPos.add(teacherPo2);
+        Set<StudentPo> studentPos = new HashSet<StudentPo>();
+        studentPos.add(student);
+        teacherPo1.setStudents(studentPos);
+        teacherPo2.setStudents(studentPos);
+        student.setTeachers(teacherPos);
         /*添加、保存方法*/
         session.save(student);
+    }
+
+    private static void selectStudentByXml(Session session){
+        List list1 = session.getNamedQuery("student.sqlget").list();
+        List list = session.getNamedQuery("student.hqlget").list();
+        System.out.println();
     }
 
     private static void selectStudentByOid(Session session){
@@ -89,7 +101,7 @@ public class HibernateDemo {
     }
 
     private static void saveGrade(Session session) {
-        GradePo grade = new GradePo(1, 100.0, "语文", new Date());
+        GradePo grade = new GradePo(100.0, "语文", new Date());
         session.save(grade);
     }
 }
