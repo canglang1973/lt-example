@@ -31,6 +31,7 @@
         -->
         <property name="hibernate.hbm2ddl.auto">create</property>
         <!--<property name="hibernate.hbm2ddl.auto">none</property>-->
+        
         <!--加载映射文件，将hbm配置文件或者全类名配置到核心文件中，使其自动读取-->
         <mapping resource="com/canglang/hibernate/po/StudentPo.hbm.xml"/>
         <mapping class="com.canglang.hibernate.po.GradePo"/>

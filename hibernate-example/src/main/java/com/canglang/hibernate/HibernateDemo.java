@@ -42,17 +42,21 @@ public class HibernateDemo {
          * */
         Transaction transaction = session.beginTransaction();
         saveStudent(session);
-        selectStudentByXml(session);
-        selectStudentByOid(session);
-        selectStudentByHql(session);
-        selectStudentBySql(session);
+//        selectStudentByXml(session);
+//        selectStudentByOid(session);
+//        selectStudentByHql(session);
+//        selectStudentBySql(session);
 
 //        saveGrade(session);
 
 //        /*提交事务*/
         transaction.commit();
-        /*关闭资源*/
         session.close();
+        Session session1 = sessionFactory.openSession();
+        StudentPo load = session1.load(StudentPo.class, 1);
+        Set<GradePo> grades = load.getGrades();
+        session1.close();
+        /*关闭资源*/
         sessionFactory.close();
     }
 

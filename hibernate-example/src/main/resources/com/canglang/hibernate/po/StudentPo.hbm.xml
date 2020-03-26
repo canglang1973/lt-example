@@ -34,11 +34,11 @@
         <property name="age" column="age" length="3"/>
         <property name="gender" column="gender" length="2"/>
         <property name="createTime" column="create_time"/>
-        <set name="grades" cascade="all">
+        <set name="grades" cascade="all" lazy="true">
             <key column="student"/>
             <one-to-many class="com.canglang.hibernate.po.GradePo"/>
         </set>
-        <set name="teachers" table="student_teacher" cascade="all">
+        <set name="teachers" table="student_teacher" cascade="all" lazy="true">
             <key column="studentid"/>
             <many-to-many column="teacherid" class="com.canglang.hibernate.po.TeacherPo"/>
         </set>

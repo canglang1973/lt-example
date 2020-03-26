@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+    <persistence-unit name="grade.unit">
+        <class>com.canglang.hibernate.po.GradePo</class>
+        <exclude-unlisted-classes />
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/local_db?useUnicode=true&amp;characterEncoding=utf-8"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="123456"/>
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+    </persistence-unit>
+</persistence>

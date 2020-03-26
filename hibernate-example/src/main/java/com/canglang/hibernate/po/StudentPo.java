@@ -3,6 +3,7 @@ package com.canglang.hibernate.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Set;
  * @version: 1.0
  * @description: 使用配置文件的方式 com/canglang/hibernate/mapper/StudentPo.hbm.xml
  **/
+@Audited
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentPo implements Serializable {

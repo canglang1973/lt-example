@@ -3,6 +3,7 @@ package com.canglang.hibernate.po;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.util.Set;
  * @version: 1.0
  * @description:
  **/
+@Audited
 @Entity
 @Table(name = "teacher")
 @AllArgsConstructor
