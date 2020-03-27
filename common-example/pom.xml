@@ -30,25 +30,23 @@
             <version>5.2.2.RELEASE</version>
         </dependency>
     </dependencies>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <build>
         <finalName>commom-example</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>2.5.1</version>
                 <executions>
                     <execution>
                         <id>default-compile</id>
                         <configuration>
+                            <!-- Disable annotation processing for ourselves.-->
                             <compilerArgument>-proc:none</compilerArgument>
-                            <source>1.8</source>
-                            <target>1.8</target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <configuration>
                             <source>1.8</source>
                             <target>1.8</target>
                         </configuration>

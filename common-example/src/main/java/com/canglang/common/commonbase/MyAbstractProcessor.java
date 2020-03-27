@@ -17,21 +17,21 @@ import java.util.Set;
  * @category
  * @time: 2019/11/21 0021-11:21
  * @version: 1.0
- * @description:
+ * @description: 使用maven-plugin下的compile编译会执行此类
  **/
 //指定该注解处理器可以解决的类型，需要完整的包名+类命
-@SupportedAnnotationTypes("com.canglang.common.commonbase.CustomAnnotation")
+@SupportedAnnotationTypes({"com.canglang.common.commonbase.CustomAnnotation"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class MyAbstractProcessor extends AbstractProcessor {
 
     public MyAbstractProcessor(){
     }
 
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         //创建动态代码，实际上就是创建一个String, 写入到文件里
         //然后文件会被解释为.class文件
-
         StringBuilder builder = new StringBuilder()
                 .append("package com.canglang.common.commonbase;\n\n")
                 .append("public class GeneratedClass {\n\n")
@@ -47,11 +47,10 @@ public class MyAbstractProcessor extends AbstractProcessor {
         builder.append("\";\n")
                 .append("\t}\n")
                 .append("}\n");
-
         //将String写入并生成.class文件
         try {
             JavaFileObject source = processingEnv.getFiler().createSourceFile(
-                    "com.zhangjian.annotationprocessor.generated.GeneratedClass");
+                    "com.canglang.common.commonbase.GeneratedClass");
 
             Writer writer = source.openWriter();
             writer.write(builder.toString());
@@ -60,6 +59,6 @@ public class MyAbstractProcessor extends AbstractProcessor {
         } catch (IOException e) {
             //
         }
-        return false;
+        return true;
     }
 }

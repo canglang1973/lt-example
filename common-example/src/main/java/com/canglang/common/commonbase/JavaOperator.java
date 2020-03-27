@@ -1,5 +1,7 @@
 package com.canglang.common.commonbase;
 
+import java.io.File;
+
 /**
  * @author leitao.
  * @category
@@ -26,7 +28,7 @@ package com.canglang.common.commonbase;
 public class JavaOperator {
 
     @CustomAnnotation
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         bitwiseAnd(3, 5);
         logicalAnd(true, false);
         bitwiseOr(3, 5);
