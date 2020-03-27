@@ -7,7 +7,7 @@
   -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
     <persistence-unit name="grade.unit">
-        <class>com.canglang.hibernate.po.GradePo</class>
+        <class>com.canglang.hibernate.orm.po.GradePo</class>
         <exclude-unlisted-classes />
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>

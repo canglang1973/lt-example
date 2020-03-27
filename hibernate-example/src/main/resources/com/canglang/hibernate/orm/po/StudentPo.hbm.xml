@@ -3,7 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <!--name:Javabean类的相对路径,table:数据库表名-->
-    <class name="com.canglang.hibernate.po.StudentPo" table="student">
+    <class name="com.canglang.hibernate.orm.po.StudentPo" table="student">
         <!--
         id:数据库中的主键，对应的是Javabean类中id(主键)，和数据表中的主键，
         name:代表的是实体类中的名字
@@ -36,14 +36,14 @@
         <property name="createTime" column="create_time"/>
         <set name="grades" cascade="all" lazy="true">
             <key column="student"/>
-            <one-to-many class="com.canglang.hibernate.po.GradePo"/>
+            <one-to-many class="com.canglang.hibernate.orm.po.GradePo"/>
         </set>
         <set name="teachers" table="student_teacher" cascade="all" lazy="true">
             <key column="studentid"/>
-            <many-to-many column="teacherid" class="com.canglang.hibernate.po.TeacherPo"/>
+            <many-to-many column="teacherid" class="com.canglang.hibernate.orm.po.TeacherPo"/>
         </set>
 
     </class>
     <query name="student.hqlget">select t from StudentPo t where id = 1</query>
-    <sql-query name="student.sqlget"><return class="com.canglang.hibernate.po.StudentPo"/>select * from student t where id = 1 </sql-query>
+    <sql-query name="student.sqlget"><return class="com.canglang.hibernate.orm.po.StudentPo"/>select * from student t where id = 1 </sql-query>
 </hibernate-mapping>

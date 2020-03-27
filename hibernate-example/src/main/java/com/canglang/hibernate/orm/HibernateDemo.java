@@ -1,19 +1,13 @@
-package com.canglang.hibernate;
+package com.canglang.hibernate.orm;
 
-import com.canglang.hibernate.po.GradePo;
-import com.canglang.hibernate.po.StudentPo;
-import com.canglang.hibernate.po.TeacherPo;
-import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
-import org.hibernate.query.Query;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author leitao.
