@@ -1,5 +1,8 @@
 package com.canglang.hibernate.orm;
 
+import com.canglang.hibernate.orm.po.GradePo;
+import com.canglang.hibernate.orm.po.StudentPo;
+import com.canglang.hibernate.orm.po.TeacherPo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -7,7 +10,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author leitao.
