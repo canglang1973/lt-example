@@ -1,4 +1,10 @@
 package com.canglang.algorithm.letcode;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * @author leitao.
  * @category
@@ -24,8 +30,8 @@ package com.canglang.algorithm.letcode;
 public class LongestCommonPrefix_14 {
 
     public static void main(String[] args) {
-        String[] strings = new String[]{"c"};
-        System.out.println(longestCommonPrefix(strings));
+        String[] strings = new String[]{"ab","a"};
+        System.out.println(longestCommonPrefix_2(strings));
     }
 
     public static String longestCommonPrefix(String[] strs) {
@@ -50,9 +56,43 @@ public class LongestCommonPrefix_14 {
                     break;
                 }
             }
-            if (!flag){
+            if (!flag) {
                 reslut = strs[0];
             }
+        }
+        return reslut;
+    }
+
+    public static String longestCommonPrefix_2(String[] strs) {
+        String reslut = "";
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        if (strs.length > 0) {
+            TreeSet<String> set = new TreeSet<>(new Comparator<String>() {
+                @Override
+                public int compare(String s1, String s2) {
+                    int num = Integer.compare(s1.length(), s2.length());
+                    //如果长度相等，则根据内容排序
+                    if (num == 0) {
+                        return s2.compareTo(s1);
+                    }
+                    return num;
+                }
+            });
+            set.addAll(Arrays.asList(strs));
+            String first = set.pollFirst();
+            int index = 0;
+            for (int i = 1; i <= first.length(); i++) {
+                String temp = first.substring(0, i);
+                for (String s : set) {
+                    if (!s.startsWith(temp)) {
+                        return temp.substring(0, i-1);
+                    }
+                }
+                index = i;
+            }
+            return first.substring(0, index);
         }
         return reslut;
     }
