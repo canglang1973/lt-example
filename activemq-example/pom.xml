@@ -12,7 +12,7 @@
 
     <artifactId>activemq-example</artifactId>
     <properties>
-        <qpid-jms-version>0.2.0</qpid-jms-version>
+        <qpid-jms-version>0.10.0</qpid-jms-version>
         <geronimo-jms-version>1.1</geronimo-jms-version>
         <stompjms-client-version>1.19</stompjms-client-version>
         <mqtt-client-version>1.14</mqtt-client-version>
